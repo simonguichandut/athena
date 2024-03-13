@@ -1,0 +1,63 @@
+<comment>
+problem   = Homogeneous sphere test
+reference = Jiang 2021
+configure = --prob=homogeneous_sphere --coord=spherical_polar -implicit_radiation
+
+## currently this file is the values from the file that Yan-Fei sent.  The values quoted in the paper are slightly different.
+
+<job>
+problem_id = hsphere  # problem ID: basename of output filenames
+
+<output1>
+file_type   = tab      # Tabular data dump
+variable    = prim     # variables to be output
+data_format = %12.6e   # Optional data format string
+dt          = 1.0 #0.3 # time increment between outputs
+
+<time>
+cfl_number = 0.3       # The Courant, Friedrichs, & Lewy (CFL) Number
+nlim       = -1        # cycle limit
+tlim       = 3.0 #100.0# time limit
+
+<mesh>
+nx1        = 400       # Number of zones in X1-direction
+x1min      = 0.1       # minimum value of X1
+x1max      = 7.0617    # maximum value of X1
+ix1_bc     = user      # Inner-X1 boundary condition flag
+ox1_bc     = user      # Outer-X1 boundary condition flag
+x1rat      = 1.0107    # non-uniform grid ratio
+
+nx2        = 1         # Number of zones in X2-direction    
+x2min      = 0.7853981633974483  # minimum value of X2
+x2max      = 2.356194490192345   # maximum value of X2
+ix2_bc     = periodic  # Inner-X2 boundary condition flag
+ox2_bc     = periodic  # Outer-X2 boundary condition flag
+
+nx3        = 1         # Number of zones in X3-direction
+x3min      = 0.0       # minimum value of X3
+x3max      = 6.2831853071795862 # maximum value of X3
+ix3_bc     = periodic  # Inner-X3 boundary condition flag
+ox3_bc     = periodic  # Outer-X3 boundary condition flag
+
+<meshblock>
+nx1 = 400
+nx2 = 1
+nx3 = 1
+
+<hydro>
+gamma = 1.6666666666667  # gamma = C_p/C_v
+
+<radiation>
+nmu         = 40        # default angular system with 80 angles per cell in 3D
+prat        = 0.00      # $a_rT_0^4/P_0$
+crat        = 10.0      # $c/v_0$
+angle_flag  = 1         # using the angular system that rotates with local coordinate
+nzeta       = 20        # number of angles from 0 to pi/2 along polar direction
+npsi        = 0         # number of angles from 0 to pi along toroidal direction       
+error_limit = 1.e-7     # tolerance level of iteration
+nlimit      = 300       # maximum number of iterations to try
+
+<problem>
+rho0        = 1.0       # density
+T0          = 1.0       # temperature
+opac        = 10.0      # opacity
